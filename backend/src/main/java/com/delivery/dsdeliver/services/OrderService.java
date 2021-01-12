@@ -43,7 +43,16 @@ public class OrderService {
             order.getProducts().add(product);
         }
 
-        order = repository.save(order); //saves to the database
+        order = repository.save(order); // saves to the database
+        return new OrderDTO(order);
+    }
+
+    //access the order and change its status to DELIVERED
+    @Transactional
+    public OrderDTO setDelivered(Long id) {
+        Order order = repository.getOne(id);
+        order.setStatus(OrderStatus.DELIVERED);
+        order = repository.save(order);
         return new OrderDTO(order);
     }
 
